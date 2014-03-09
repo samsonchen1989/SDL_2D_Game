@@ -24,6 +24,7 @@ public:
     void render();
     void update();
     void handleEvents();
+    void quit();
     void clean();
 
     GAME_STATUS_TAG init(const char* title, int xpos, int ypos,
@@ -43,5 +44,7 @@ private:
 
     std::vector<GameObject*> m_gameObjects;
 };
+
+typedef Game TheGame;
 
 #endif

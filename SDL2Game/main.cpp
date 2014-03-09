@@ -9,14 +9,14 @@ int main(int argc, char** grgs)
     Uint32 frameTime;
 
     GAME_STATUS_TAG res;
-    res = Game::Instance()->init("Chapter1", 100, 100, 640, 480, false);
+    res = TheGame::Instance()->init("Chapter1", 100, 100, 640, 480, false);
     if (res == GAME_INIT_SUCCESS) {
-        while (Game::Instance()->running()) {
+        while (TheGame::Instance()->running()) {
             frameStart = SDL_GetTicks();
 
-            Game::Instance()->handleEvents();
-            Game::Instance()->update();
-            Game::Instance()->render();
+            TheGame::Instance()->handleEvents();
+            TheGame::Instance()->update();
+            TheGame::Instance()->render();
 
             frameTime = SDL_GetTicks() - frameStart;
             if (frameTime < DELAY_TIME) {
@@ -27,7 +27,7 @@ int main(int argc, char** grgs)
         return -1;
     }
 
-    Game::Instance()->clean();
+    TheGame::Instance()->clean();
 
     return 0;
 }
