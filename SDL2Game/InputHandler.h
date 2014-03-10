@@ -48,9 +48,25 @@ public:
         return m_mousePosition;
     }
 
+    bool isKeyDown(SDL_Scancode key);
+
 private:
     InputHandler();
     ~InputHandler();
+
+    //handle keyboard event
+    void onKeyDown();
+    void onKeyUp();
+
+    //handle mouse events
+    void onMouseMove(SDL_Event& event);
+    void onMouseButtonDown(SDL_Event& event);
+    void onMouseButtonUp(SDL_Event& event);
+
+    //handle joystick events
+    void onJoystickAxisMove(SDL_Event& event);
+    void onJoystickButtonDown(SDL_Event& event);
+    void onJoystickButtonUp(SDL_Event& event);
 
     static const int m_joystickDeadZone = 10000;
     static InputHandler* s_pInstance;
@@ -62,6 +78,7 @@ private:
     std::vector<std::vector<bool>> m_buttonStates;
     std::vector<bool> m_mouseButtonStates;
     Vector2D* m_mousePosition;
+    const Uint8* m_keystate;
 };
 
 typedef InputHandler TheInputHandler;
