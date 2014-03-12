@@ -248,6 +248,13 @@ void InputHandler::onMouseMove(SDL_Event& event)
     m_mousePosition->setY(static_cast<float>(event.motion.y));
 }
 
+void InputHandler::resetMouseButton()
+{
+    m_mouseButtonStates[LEFT] = false;
+    m_mouseButtonStates[RIGHT] = false;
+    m_mouseButtonStates[MIDDLE] = false;
+}
+
 void InputHandler::onKeyDown()
 {
     m_keystate = SDL_GetKeyboardState(0);

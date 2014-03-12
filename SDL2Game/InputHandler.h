@@ -50,6 +50,8 @@ public:
 
     bool isKeyDown(SDL_Scancode key);
 
+    void resetMouseButton();
+
 private:
     InputHandler();
     ~InputHandler();

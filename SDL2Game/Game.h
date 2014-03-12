@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include "Log.h"
 #include "GameObject.h"
+#include "GameStateMachine.h"
 
 class Game
 {
@@ -20,6 +21,8 @@ public:
     }
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
+
+    GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 
     void render();
     void update();
@@ -43,6 +46,7 @@ private:
     SDL_Texture* m_pTexture;
 
     std::vector<GameObject*> m_gameObjects;
+    GameStateMachine* m_pGameStateMachine;
 };
 
 typedef Game TheGame;
