@@ -1,7 +1,7 @@
 SDLGame
 =======
 
-Write game with <SDL Game Development>
+Write game with "SDL Game Development"
 
 You can find the book in
 http://www.packtpub.com/simple-directmedia-layer-game-development/book
