@@ -23,7 +23,6 @@ void GameStateMachine::changeState(GameState* pState)
         if (m_gameStates.back()->getStateID() == pState->getStateID()) {
             return;
         }
-        std::cout << "state machine change state 1" << std::endl;
 
         m_gameStates.back()->onExit();
         m_gameStates.pop_back();
