@@ -1,10 +1,11 @@
 SDLGame
 =======
 
-Write game with <SDL Game Development>
+Write game with "SDL Game Development"
 
 You can find the book in
 http://www.packtpub.com/simple-directmedia-layer-game-development/book
+
 Leave your email in "Support" sheet PacktPub will send the book's code
 to you for free.
 
@@ -19,5 +20,5 @@ like making it more OOP or more efficient. Record it using Git is a
 good idea because changes in the code sometimes are more valuable than
 the final code.
 
-Focus on progress but not the result, maybe this is one
-fascination of Git as well.
+Focus on progress but not the result, maybe this is one fascination
+of Git as well.
