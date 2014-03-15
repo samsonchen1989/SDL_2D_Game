@@ -1,10 +1,8 @@
 #include "Enemy.h"
 
-Enemy::Enemy(const LoaderParams* pParams) :
-    SDLGameObject(pParams)
+Enemy::Enemy() : SDLGameObject()
 {
-    m_velocity.setY(2.0f);
-    m_velocity.setX(0.001f);
+
 }
 
 void Enemy::draw()
@@ -29,4 +27,10 @@ void Enemy::update()
 
 void Enemy::clean()
 {
+}
+
+void Enemy::load(const LoaderParams* pParams)
+{
+    SDLGameObject::load(pParams);
+    m_velocity.setY(2.0f);
 }

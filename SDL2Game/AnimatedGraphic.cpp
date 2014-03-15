@@ -1,13 +1,14 @@
+#include <iostream>
 #include "AnimatedGraphic.h"
 
-AnimatedGraphic::AnimatedGraphic(LoaderParams* pParams, int animSpeed) :
-    SDLGameObject(pParams), m_animSpeed(animSpeed)
+AnimatedGraphic::AnimatedGraphic() : SDLGameObject()
 {
 }
 
 void AnimatedGraphic::update()
 {
-    m_currentFrame = int((SDL_GetTicks() / (1000 / m_animSpeed)) % 5);
+    std::cout << "update, m_animSpeed:" << m_animSpeed << std::endl;
+    m_currentFrame = int((SDL_GetTicks() / (1000 / m_animSpeed)) % m_numFrames);
 }
 
 void AnimatedGraphic::draw()
@@ -18,4 +19,12 @@ void AnimatedGraphic::draw()
 void AnimatedGraphic::clean()
 {
     SDLGameObject::clean();
+}
+
+void AnimatedGraphic::load(const LoaderParams* pParams)
+{
+    SDLGameObject::load(pParams);
+    m_animSpeed = pParams->getAnimSpeed();
+    m_numFrames = pParams->getNumFrames();
+    std::cout << "load, m_animSpeed:" << m_animSpeed << std::endl;
 }

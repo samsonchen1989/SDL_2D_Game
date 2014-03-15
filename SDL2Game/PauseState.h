@@ -4,8 +4,9 @@
 #include <vector>
 #include "GameState.h"
 #include "GameObject.h"
+#include "MenuState.h"
 
-class PauseState : public GameState
+class PauseState : public MenuState
 {
 public:
     virtual void update();
@@ -19,8 +20,9 @@ public:
 private:
     static void s_pauseToMain();
     static void s_resumePlay();
-    static const std::string s_pauseID;
+    virtual void setCallbacks(const std::vector<Callback>& callbacks);
 
+    static const std::string s_pauseID;
     std::vector<GameObject*> m_gameObjects;
 };
 

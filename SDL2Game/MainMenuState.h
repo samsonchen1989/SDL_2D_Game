@@ -1,11 +1,11 @@
-#ifndef GAME_OVER_STATE_H
-#define GAME_OVER_STATE_H
+#ifndef MAIN_MENU_STATE_H
+#define MAIN_MENU_STATE_H
 
 #include "MenuState.h"
 #include "GameObject.h"
 #include <vector>
 
-class GameOverState : public MenuState
+class MainMenuState : public MenuState
 {
 public:
     virtual void update();
@@ -14,15 +14,16 @@ public:
     virtual bool onEnter();
     virtual bool onExit();
 
-    virtual std::string getStateID() const { return s_gameOverID; }
+    virtual std::string getStateID() const { return s_menuID; }
 
 private:
-    static const std::string s_gameOverID;
-    std::vector<GameObject*> m_gameObjects;
+    static const std::string s_menuID;
+    std::vector<GameObject*> m_menuObjects;
 
     //call back functions for menu items
-    static void s_gameOverToMain();
-    static void s_restartPlay();
+    static void s_menuToPlay();
+    static void s_exitFromMenu();
+
     virtual void setCallbacks(const std::vector<Callback>& callbacks);
 };
 

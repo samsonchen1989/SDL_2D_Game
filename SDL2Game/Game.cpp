@@ -5,8 +5,11 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "InputHandler.h"
-#include "MenuState.h"
+#include "MainMenuState.h"
 #include "PlayState.h"
+#include "GameObjectFactory.h"
+#include "MenuButton.h"
+#include "AnimatedGraphic.h"
 
 using namespace std;
 
@@ -48,8 +51,13 @@ GAME_STATUS_TAG Game::init(const char* title, int xpos, int ypos, int width, int
 
     TheInputHandler::Instance()->initialiseJoysticks();
 
+    TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
+    TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
+    TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
+    TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
+
     m_pGameStateMachine = new GameStateMachine();
-    m_pGameStateMachine->changeState(new MenuState());
+    m_pGameStateMachine->changeState(new MainMenuState());
 
     return GAME_INIT_SUCCESS;
 }

@@ -7,8 +7,8 @@ class Vector2D
 {
 public:
     //Todo: use template here to replace float and
-    //we will not be confused by convet in int/float/double 
-    Vector2D(float x, float y) : m_x(x), m_y(y) {}
+    //we will not be confused by convet in int/float/double
+    Vector2D(float x = 0, float y = 0) : m_x(x), m_y(y) {}
     Vector2D(const Vector2D& v) : m_x(v.m_x), m_y(v.m_y) {}
 
     float getX() { return m_x; }

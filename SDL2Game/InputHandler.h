@@ -27,6 +27,7 @@ public:
 
     void update();
     void clean();
+    void reset();
 
     void initialiseJoysticks();
     bool joystickInitialised() {

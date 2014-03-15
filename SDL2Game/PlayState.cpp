@@ -6,6 +6,7 @@
 #include "PauseState.h"
 #include "Enemy.h"
 #include "GameOverState.h"
+#include "StateParser.h"
 
 #include <iostream>
 
@@ -18,15 +19,15 @@ bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
     int topA, topB;
     int bottomA, bottomB;
 
-    leftA = p1->getPosition().getX();
+    leftA = static_cast<int>(p1->getPosition().getX());
     rightA = leftA + p1->getWidth();
-    topA = p1->getPosition().getY();
+    topA = static_cast<int>(p1->getPosition().getY());
     bottomA = topA + p1->getHeight();
 
     //calculate the sides of rectB
-    leftB = p2->getPosition().getX();
+    leftB = static_cast<int>(p2->getPosition().getX());
     rightB = leftB + p2->getWidth();
-    topB = p2->getPosition().getY();
+    topB = static_cast<int>(p2->getPosition().getY());
     bottomB = topB + p2->getHeight();
 
     if (bottomA <= topB) { return false; }
@@ -63,6 +64,7 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
+    /*
     std::cout << "PlayState enter." << std::endl;
     if (TheTextureManager::Instance()->load("assets/helicopter.png",
         "helicopter", TheGame::Instance()->getRenderer()) == false)
@@ -85,6 +87,12 @@ bool PlayState::onEnter()
 
     std::cout << "PlayState enter return true." << std::endl;
     return true;
+    */
+    StateParser stateParser;
+    stateParser.parseState("assets/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+
+    std::cout << "entering PlayState\n";
+    return true;
 }
 
 bool PlayState::onExit()
@@ -94,6 +102,11 @@ bool PlayState::onExit()
     }
 
     m_gameObjects.clear();
-    TheTextureManager::Instance()->clearFromTextureMap("helicopter");
+
+    for (unsigned i = 0; i < m_textureIDList.size(); i++) {
+        std::cout << "PlayState, textureID:" << m_textureIDList[i] << std::endl;
+        TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+    }
+
     return true;
 }

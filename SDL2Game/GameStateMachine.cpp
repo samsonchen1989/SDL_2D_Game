@@ -35,7 +35,7 @@ void GameStateMachine::changeState(GameState* pState)
 
 void GameStateMachine::update()
 {
-    std::cout << "state machine update" << m_gameStates.back()->getStateID() << std::endl;
+    //std::cout << "state machine update" << m_gameStates.back()->getStateID() << std::endl;
     if (m_gameStates.empty() == false) {
         m_gameStates.back()->update();
     }
