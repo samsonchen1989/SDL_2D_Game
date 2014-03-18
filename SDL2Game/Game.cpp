@@ -25,6 +25,10 @@ Game::~Game()
 
 GAME_STATUS_TAG Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
 {
+    // store the game width and height
+    m_gameWidth = width;
+    m_gameHeight = height;
+
     //Initialize SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) >= 0) {
         //if succeeded create our window

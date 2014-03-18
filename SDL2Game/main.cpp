@@ -9,7 +9,7 @@ int main(int argc, char** grgs)
     Uint32 frameTime;
 
     GAME_STATUS_TAG res;
-    res = TheGame::Instance()->init("Chapter1", 100, 100, 640, 480, false);
+    res = TheGame::Instance()->init("SDL_Game", 100, 100, 640, 480, false);
     if (res == GAME_INIT_SUCCESS) {
         while (TheGame::Instance()->running()) {
             frameStart = SDL_GetTicks();

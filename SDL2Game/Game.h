@@ -20,10 +20,6 @@ public:
         return s_pInstance;
     }
 
-    SDL_Renderer* getRenderer() const { return m_pRenderer; }
-
-    GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
-
     void render();
     void update();
     void handleEvents();
@@ -35,6 +31,13 @@ public:
 
     bool running() { return m_bRunning; }
 
+    SDL_Renderer* getRenderer() const { return m_pRenderer; }
+
+    GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
+
+    int getGameWidth() const { return m_gameWidth; }
+    int getGameHeight() const { return m_gameHeight; }
+
 private:
     Game();
     virtual ~Game();
@@ -44,6 +47,9 @@ private:
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
     SDL_Texture* m_pTexture;
+
+    int m_gameWidth;
+    int m_gameHeight;
 
     std::vector<GameObject*> m_gameObjects;
     GameStateMachine* m_pGameStateMachine;

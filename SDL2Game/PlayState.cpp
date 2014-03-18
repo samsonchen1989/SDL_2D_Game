@@ -7,6 +7,8 @@
 #include "Enemy.h"
 #include "GameOverState.h"
 #include "StateParser.h"
+#include "LevelParser.h"
+#include "Level.h"
 
 #include <iostream>
 
@@ -53,6 +55,11 @@ void PlayState::update()
     {
         TheGame::Instance()->getStateMachine()->pushState(new GameOverState());
     }
+
+    if(pLevel != 0)
+    {
+        pLevel->render();
+    }
 }
 
 void PlayState::render()
@@ -60,36 +67,20 @@ void PlayState::render()
     for (size_t i = 0; i < m_gameObjects.size(); i++) {
         m_gameObjects[i]->draw();
     }
+
+    if(pLevel != 0)
+    {
+        pLevel->render();
+    }
 }
 
 bool PlayState::onEnter()
 {
-    /*
-    std::cout << "PlayState enter." << std::endl;
-    if (TheTextureManager::Instance()->load("assets/helicopter.png",
-        "helicopter", TheGame::Instance()->getRenderer()) == false)
-    {
-        std::cout << "PlayState read image false." << std::endl;
-        return false;
-    }
-
-    if (TheTextureManager::Instance()->load("assets/helicopter2.png",
-        "helicopter2", TheGame::Instance()->getRenderer()) == false)
-    {
-        return false;
-    }
-
-    GameObject* player = new Player(new LoaderParams(500, 100, 128, 55, "helicopter"));
-    GameObject* enemy = new Enemy(new LoaderParams(100, 100, 128, 55, "helicopter2"));
-
-    m_gameObjects.push_back(player);
-    m_gameObjects.push_back(enemy);
-
-    std::cout << "PlayState enter return true." << std::endl;
-    return true;
-    */
     StateParser stateParser;
     stateParser.parseState("assets/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+
+    LevelParser levelParser;
+    pLevel = levelParser.parseLevel("assets/map1.tmx");
 
     std::cout << "entering PlayState\n";
     return true;
