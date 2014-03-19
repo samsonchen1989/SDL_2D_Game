@@ -58,7 +58,7 @@ void PlayState::update()
 
     if(pLevel != 0)
     {
-        pLevel->render();
+        pLevel->update();
     }
 }
 
@@ -80,7 +80,7 @@ bool PlayState::onEnter()
     stateParser.parseState("assets/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
 
     LevelParser levelParser;
-    pLevel = levelParser.parseLevel("assets/map1.tmx");
+    pLevel = levelParser.parseLevel("assets/map2.tmx");
 
     std::cout << "entering PlayState\n";
     return true;

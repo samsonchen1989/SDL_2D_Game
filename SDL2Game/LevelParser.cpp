@@ -101,6 +101,9 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
         }
     }
 
+    std::cout << "data, m_height:" << m_height << ", m_width:" << m_width << std::endl;
+    pTileLayer->setMapWidth(m_width);
     pTileLayer->setTileIDs(data);
+
     pLayers->push_back(pTileLayer);
 }

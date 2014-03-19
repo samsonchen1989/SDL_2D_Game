@@ -18,9 +18,9 @@ public:
         m_tileIDs = data;
     }
 
-    void setTileSize(int tileSize) {
-        m_tileSize = tileSize;
-    }
+    void setTileSize(int tileSize) { m_tileSize = tileSize; }
+
+    void setMapWidth(int mapWidth) { m_mapWidth = mapWidth; }
 
     Tileset getTilesetByID(int tileID);
 
@@ -28,6 +28,7 @@ private:
     int m_numColumns;
     int m_numRows;
     int m_tileSize;
+    int m_mapWidth;
 
     Vector2D m_position;
     Vector2D m_velocity;
