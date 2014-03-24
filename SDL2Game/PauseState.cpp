@@ -34,35 +34,18 @@ void PauseState::render()
 
 bool PauseState::onEnter()
 {
-    /*
-    if (TheTextureManager::Instance()->load("assets/resume.png", "resumebutton",
-        TheGame::Instance()->getRenderer()) == false)
-    {
-        return false;
-    }
-
-    if (TheTextureManager::Instance()->load("assets/main.png", "mainbutton",
-        TheGame::Instance()->getRenderer()) == false)
-    {
-        return false;
-    }
-
-    GameObject* button1 = new MenuButton(new LoaderParams(200, 100, 200, 80, "mainbutton"), s_pauseToMain);
-    GameObject* button2 = new MenuButton(new LoaderParams(200, 300, 200, 80, "resumebutton"), s_resumePlay);
-
-    m_gameObjects.push_back(button1);
-    m_gameObjects.push_back(button2);
-
-    return true;
-    */
     StateParser stateParser;
-    stateParser.parseState("assets/test.xml", s_pauseID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState("assets/attack.xml", s_pauseID, &m_gameObjects, &m_textureIDList);
 
     m_callbacks.push_back(0);
     m_callbacks.push_back(s_pauseToMain);
     m_callbacks.push_back(s_resumePlay);
 
     setCallbacks(m_callbacks);
+
+    m_loadingComplete = true;
+
+    std::cout << "entering PauseState\n";
     return true;
 }
 

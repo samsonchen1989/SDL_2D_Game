@@ -11,7 +11,7 @@ class TileLayer : public Layer
 public:
     TileLayer(int tileSize, const std::vector<Tileset> &tilesets);
 
-    virtual void update();
+    virtual void update(Level* pLevel);
     virtual void render();
 
     void setTileIDs(const std::vector<std::vector<int> >& data) {
@@ -23,6 +23,12 @@ public:
     void setMapWidth(int mapWidth) { m_mapWidth = mapWidth; }
 
     Tileset getTilesetByID(int tileID);
+
+    int getTileSize() { return m_tileSize; }
+
+    const std::vector<std::vector<int> >& getTileIDs() { return m_tileIDs; }
+
+    const Vector2D getPosition() { return m_position; }
 
 private:
     int m_numColumns;

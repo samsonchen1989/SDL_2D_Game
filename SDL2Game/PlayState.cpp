@@ -7,97 +7,87 @@
 #include "Enemy.h"
 #include "GameOverState.h"
 #include "StateParser.h"
+#include "Game.h"
+#include "InputHandler.h"
 #include "LevelParser.h"
 #include "Level.h"
+#include "BulletHandler.h"
 
 #include <iostream>
 
 const std::string PlayState::s_playID = "PLAY";
 
-bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
-{
-    int leftA, leftB;
-    int rightA, rightB;
-    int topA, topB;
-    int bottomA, bottomB;
-
-    leftA = static_cast<int>(p1->getPosition().getX());
-    rightA = leftA + p1->getWidth();
-    topA = static_cast<int>(p1->getPosition().getY());
-    bottomA = topA + p1->getHeight();
-
-    //calculate the sides of rectB
-    leftB = static_cast<int>(p2->getPosition().getX());
-    rightB = leftB + p2->getWidth();
-    topB = static_cast<int>(p2->getPosition().getY());
-    bottomB = topB + p2->getHeight();
-
-    if (bottomA <= topB) { return false; }
-    if (topA >= bottomB) { return false; }
-    if (rightA <= leftB) { return false; }
-    if (leftA >= rightB) { return false; }
-
-    return true;
-}
-
 void PlayState::update()
 {
-    if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
-        TheGame::Instance()->getStateMachine()->pushState(new PauseState());
-    }
-
-    for (size_t i = 0; i < m_gameObjects.size(); i++) {
-        m_gameObjects[i]->update();
-    }
-
-    if (checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
-        dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
+    if(m_loadingComplete && !m_exiting)
     {
-        TheGame::Instance()->getStateMachine()->pushState(new GameOverState());
-    }
+        if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
+        {
+            TheGame::Instance()->getStateMachine()->pushState(new PauseState());
+        }
 
-    if(pLevel != 0)
-    {
-        pLevel->update();
+        //update all bullet
+        TheBulletHandler::Instance()->updateBullets();
+
+        if(TheGame::Instance()->getPlayerLives() == 0)
+        {
+            TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
+        }
+
+        if(pLevel != 0)
+        {
+            pLevel->update();
+        }
     }
 }
 
 void PlayState::render()
 {
-    for (size_t i = 0; i < m_gameObjects.size(); i++) {
-        m_gameObjects[i]->draw();
-    }
-
-    if(pLevel != 0)
+    if(m_loadingComplete)
     {
-        pLevel->render();
+        if(pLevel != 0)
+        {
+            pLevel->render();
+        }
+        //std::cout << "PlayerLives:" << TheGame::Instance()->getPlayerLives() << std::endl;
+        for(int i = 0; i < TheGame::Instance()->getPlayerLives(); i++)
+        {
+            TheTextureManager::Instance()->drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance()->getRenderer(), 0.0, 255);
+        }
+
+        TheBulletHandler::Instance()->drawBullets();
     }
 }
 
 bool PlayState::onEnter()
 {
-    StateParser stateParser;
-    stateParser.parseState("assets/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+    TheGame::Instance()->setPlayerLives(6);
 
     LevelParser levelParser;
-    pLevel = levelParser.parseLevel("assets/map2.tmx");
+    pLevel = levelParser.parseLevel(TheGame::Instance()->getLevelFiles()[TheGame::Instance()->getCurrentLevel() - 1].c_str());
+    //std::cout << "entering PlayState, pLevel:" << pLevel << std::endl;
+    TheTextureManager::Instance()->load("assets/bullet1.png", "bullet1", TheGame::Instance()->getRenderer());
+    TheTextureManager::Instance()->load("assets/bullet2.png", "bullet2", TheGame::Instance()->getRenderer());
+    TheTextureManager::Instance()->load("assets/bullet3.png", "bullet3", TheGame::Instance()->getRenderer());
+    TheTextureManager::Instance()->load("assets/lives.png", "lives", TheGame::Instance()->getRenderer());
 
+    if(pLevel != 0)
+    {
+        m_loadingComplete = true;
+    }
+
+    TheTextureManager::Instance()->printTextureMap();
     std::cout << "entering PlayState\n";
     return true;
 }
 
 bool PlayState::onExit()
 {
-    for (size_t i = 0; i < m_gameObjects.size(); i++) {
-        m_gameObjects[i]->clean();
-    }
+    m_exiting = true;
 
-    m_gameObjects.clear();
+    TheInputHandler::Instance()->reset();
+    TheBulletHandler::Instance()->clearBullets();
 
-    for (unsigned i = 0; i < m_textureIDList.size(); i++) {
-        std::cout << "PlayState, textureID:" << m_textureIDList[i] << std::endl;
-        TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
-    }
-
+    std::cout << "exiting PlayState\n";
     return true;
 }

@@ -1,26 +1,19 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "SDLGameObject.h"
+#include "ShooterObject.h"
 #include "GameObjectFactory.h"
 
-class Enemy : public SDLGameObject
+class Enemy : public ShooterObject
 {
 public:
-    Enemy();
+    virtual std::string type() { return "Enemy"; }
 
-    virtual void draw();
-    virtual void update();
-    virtual void clean();
-    virtual void load(const LoaderParams* pParams);
-};
+protected:
+    int m_health;
 
-class EnemyCreator : public BaseCreator
-{
-    GameObject* createGameObject() const
-    {
-        return new Enemy();
-    }
+    Enemy() : ShooterObject() {}
+    virtual ~Enemy() {}
 };
 
 #endif

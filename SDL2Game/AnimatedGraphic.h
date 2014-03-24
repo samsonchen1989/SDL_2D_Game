@@ -1,10 +1,10 @@
 #ifndef ANIMATED_GRAPHIC_H
 #define ANIMATED_GRAPHIC_H
 
-#include "SDLGameObject.h"
+#include "ShooterObject.h"
 #include "GameObjectFactory.h"
 
-class AnimatedGraphic : public SDLGameObject
+class AnimatedGraphic : public ShooterObject
 {
 public:
     AnimatedGraphic();
@@ -14,7 +14,7 @@ public:
     virtual void clean();
     //remember the const, or subclass will create a
     //new function but not inherit super function
-    virtual void load(const LoaderParams* pParams);
+    virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 
 protected:
     int m_animSpeed;

@@ -24,8 +24,6 @@ private:
     std::vector<GameObject*> m_gameObjects;
 
     Level* pLevel;
-
-    bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 };
 
 #endif

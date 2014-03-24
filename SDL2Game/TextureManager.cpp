@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SDL_image.h>
 #include "TextureManager.h"
 
@@ -6,6 +7,7 @@ TextureManager* TextureManager::s_pInstance = 0;
 bool TextureManager::load(std::string fileName, std::string id,
     SDL_Renderer* pRenderer)
 {
+    std::cout << "filename:" << fileName << ", id:" << id << std::endl;
     //c_str() converts string to C-like char*.
     SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 
@@ -23,11 +25,6 @@ bool TextureManager::load(std::string fileName, std::string id,
     }
 
     return false;
-}
-
-void TextureManager::clearFromTextureMap(std::string id)
-{
-    m_textureMap.erase(id);
 }
 
 void TextureManager::draw(std::string id, int x, int y, int width, int height,
@@ -50,7 +47,8 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height,
 }
 
 void TextureManager::drawFrame(std::string id, int x, int y, int width, int height,
-    int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
+    int currentRow, int currentFrame, SDL_Renderer* pRenderer,
+    double angle, int alpha, SDL_RendererFlip flip)
 {
     SDL_Rect srcRect;
     SDL_Rect destRect;
@@ -61,11 +59,13 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
     destRect.h = height;
 
     srcRect.x = width * currentFrame;
-    srcRect.y = height * (currentRow - 1);
+    srcRect.y = height * currentRow;
     srcRect.w = destRect.w;
     srcRect.h = destRect.h;
-
-    SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+    //std::cout << "id:" << id << std::endl;
+    //set the alpha of the texture and pass in the angle
+    SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
+    SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, 0, flip);
 }
 
 void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y,
@@ -85,4 +85,23 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
     destRect.h = height;
 
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+}
+
+void TextureManager::clearTextureMap()
+{
+    m_textureMap.clear();
+}
+
+void TextureManager::clearFromTextureMap(std::string id)
+{
+    m_textureMap.erase(id);
+}
+
+void TextureManager::printTextureMap()
+{
+    for (std::map<std::string, SDL_Texture*>::iterator it = m_textureMap.begin();
+            it != m_textureMap.end(); ++it)
+    {
+        std::cout << "map:" << it->first << std::endl;
+    }
 }

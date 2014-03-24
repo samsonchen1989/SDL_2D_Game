@@ -37,6 +37,18 @@ public:
 
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
+    float getScrollSpeed() { return m_scrollSpeed; }
+
+    void setPlayerLives(int lives) { m_playerLives = lives; }
+    int getPlayerLives() { return m_playerLives; }
+
+    void setCurrentLevel(int currentLevel);
+    const int getCurrentLevel() { return m_currentLevel; }
+
+    void setLevelComplete(bool levelComplete) { m_bLevelComplete = levelComplete; }
+    const bool getLevelComplete() { return m_bLevelComplete; }
+
+    std::vector<std::string> getLevelFiles() { return m_levelFiles; }
 
 private:
     Game();
@@ -50,9 +62,20 @@ private:
 
     int m_gameWidth;
     int m_gameHeight;
+    float m_scrollSpeed;
+
+    int m_playerLives;
+
+    int m_currentLevel;
+
+    bool m_bLevelComplete;
+
+    bool m_bChangingState;
 
     std::vector<GameObject*> m_gameObjects;
     GameStateMachine* m_pGameStateMachine;
+
+    std::vector<std::string> m_levelFiles;
 };
 
 typedef Game TheGame;
