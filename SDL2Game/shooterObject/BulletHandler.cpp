@@ -1,5 +1,5 @@
 #include "BulletHandler.h"
-#include "Game.h"
+#include "../Game.h"
 #include <iostream>
 
 BulletHandler* BulletHandler::s_pInstance = new BulletHandler();

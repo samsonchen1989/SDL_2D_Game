@@ -1,7 +1,7 @@
 #include <iostream>
 #include "AnimatedGraphic.h"
 
-AnimatedGraphic::AnimatedGraphic() : ShooterObject()
+AnimatedGraphic::AnimatedGraphic() : PlatformerObject()
 {
 }
 
@@ -13,17 +13,17 @@ void AnimatedGraphic::update()
 
 void AnimatedGraphic::draw()
 {
-    ShooterObject::draw();
+    PlatformerObject::draw();
 }
 
 void AnimatedGraphic::clean()
 {
-    ShooterObject::clean();
+    PlatformerObject::clean();
 }
 
 void AnimatedGraphic::load(std::unique_ptr<LoaderParams> const &pParams)
 {
-    ShooterObject::load(pParams);
+    PlatformerObject::load(pParams);
     m_animSpeed = pParams->getAnimSpeed();
     m_numFrames = pParams->getNumFrames();
     std::cout << "load, m_animSpeed:" << m_animSpeed << std::endl;

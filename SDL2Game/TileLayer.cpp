@@ -2,13 +2,16 @@
 #include "TileLayer.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "Camera.h"
 
-TileLayer::TileLayer(int tileSize, const std::vector<Tileset> &tilesets) :
+TileLayer::TileLayer(int tileSize, int mapWidth, int mapHeight, const std::vector<Tileset> &tilesets) :
     m_tileSize(tileSize), m_tilesets(tilesets),
     m_position(0, 0), m_velocity(0, 0)
 {
-    m_numColumns = (TheGame::Instance()->getGameWidth() / m_tileSize) + 1;
-    m_numRows = (TheGame::Instance()->getGameHeight() / m_tileSize);
+    m_numColumns = mapWidth;
+    m_numRows = mapHeight;
+
+    m_mapWidth = mapWidth;
 
     std::cout << "TileLayer, m_numColumns:" << m_numColumns << ", m_numRows:" << m_numRows << std::endl;
 }
@@ -55,12 +58,20 @@ void TileLayer::render()
                 continue;
             }
 
+            //if outside the viewable area then skip the tile
+            if(((j * m_tileSize) - x2) - TheCamera::Instance()->getPosition().m_x < -m_tileSize 
+                || ((j * m_tileSize) - x2) - TheCamera::Instance()->getPosition().m_x > TheGame::Instance()->getGameWidth())
+            {
+                continue;
+            }
+
             Tileset tileset = getTilesetByID(id);
             id--;
 
-            TheTextureManager::Instance()->drawTile(tileset.name, 2, 2, 
-                (j * m_tileSize) - x2, (i * m_tileSize) - y2, m_tileSize, m_tileSize,
-                (id - (tileset.firstGridID - 1)) / tileset.numColumns,
+            TheTextureManager::Instance()->drawTile(tileset.name, tileset.margin, tileset.spacing,
+                ((j * m_tileSize) - x2) - TheCamera::Instance()->getPosition().m_x,
+                ((i * m_tileSize) - y2), m_tileSize, m_tileSize, 
+                (id - (tileset.firstGridID - 1)) / tileset.numColumns, 
                 (id - (tileset.firstGridID - 1)) % tileset.numColumns,
                 TheGame::Instance()->getRenderer());
         }
@@ -69,10 +80,4 @@ void TileLayer::render()
 
 void TileLayer::update(Level* pLevel)
 {
-    if(m_position.getX() < ((m_mapWidth * m_tileSize) - TheGame::Instance()->getGameWidth()) - m_tileSize) {
-        m_velocity.setX(TheGame::Instance()->getScrollSpeed());
-        m_position += m_velocity;
-    } else {
-        m_velocity.setX(0);
-    }
 }

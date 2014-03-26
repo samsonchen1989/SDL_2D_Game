@@ -9,7 +9,7 @@
 #ifndef SDL_Game_Programming_Book_Escalator_h
 #define SDL_Game_Programming_Book_Escalator_h
 
-#include "Enemy.h"
+#include "../Enemy.h"
 
 class Eskeletor : public Enemy
 {

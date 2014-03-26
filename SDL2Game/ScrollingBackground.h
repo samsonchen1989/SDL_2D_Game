@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include "GameObjectFactory.h"
-#include "ShooterObject.h"
+#include "PlatformerObject.h"
 
-class ScrollingBackground : public ShooterObject
+class ScrollingBackground : public PlatformerObject
 {
 public:
 

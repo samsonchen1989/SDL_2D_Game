@@ -1,10 +1,10 @@
 #ifndef ANIMATED_GRAPHIC_H
 #define ANIMATED_GRAPHIC_H
 
-#include "ShooterObject.h"
+#include "PlatformerObject.h"
 #include "GameObjectFactory.h"
 
-class AnimatedGraphic : public ShooterObject
+class AnimatedGraphic : public PlatformerObject
 {
 public:
     AnimatedGraphic();

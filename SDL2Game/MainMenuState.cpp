@@ -28,12 +28,12 @@ void MainMenuState::update()
 
 void MainMenuState::render()
 {
-    if (m_menuObjects.empty() == true) {
-        return;
-    }
-
-    for (size_t i = 0; i < m_menuObjects.size(); i++) {
-        m_menuObjects[i]->draw();
+    if(m_loadingComplete && !m_menuObjects.empty())
+    {
+        for(int i = 0; i < m_menuObjects.size(); i++)
+        {
+            m_menuObjects[i]->draw();
+        }
     }
 }
 
@@ -41,7 +41,7 @@ bool MainMenuState::onEnter()
 {
     // parse the state
     StateParser stateParser;
-    stateParser.parseState("assets/attack.xml", s_menuID, &m_menuObjects, &m_textureIDList);
+    stateParser.parseState("assets/conan.xml", s_menuID, &m_menuObjects, &m_textureIDList);
 
     m_callbacks.push_back(0);
     m_callbacks.push_back(s_menuToPlay);
@@ -57,13 +57,17 @@ bool MainMenuState::onEnter()
 
 void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 {
-    //go through the objects
-    for (unsigned i = 0; i < m_menuObjects.size(); i++) {
-        //if they are of type MenuButton then assign a callback
-        //based on the id passed in from the list
-        if (dynamic_cast<MenuButton*>(m_menuObjects[i])) {
-            MenuButton* pButton = dynamic_cast<MenuButton*>(m_menuObjects[i]);
-            pButton->setCallback(callbacks[pButton->getCallbackID()]);
+    // go through the game objects
+    if(!m_menuObjects.empty())
+    {
+        for(int i = 0; i < m_menuObjects.size(); i++)
+        {
+            // if they are of type MenuButton then assign a callback based on the id passed in from the file
+            if(dynamic_cast<MenuButton*>(m_menuObjects[i]))
+            {
+                MenuButton* pButton = dynamic_cast<MenuButton*>(m_menuObjects[i]);
+                pButton->setCallback(callbacks[pButton->getCallbackID()]);
+            }
         }
     }
 }

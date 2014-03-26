@@ -2,8 +2,8 @@
 #define BULLET_H
 
 #include "ShooterObject.h"
-#include "TextureManager.h"
-#include "Game.h"
+#include "../TextureManager.h"
+#include "../Game.h"
 #include <iostream>
 
 class PlayerBullet : public ShooterObject

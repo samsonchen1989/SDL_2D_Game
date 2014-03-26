@@ -10,11 +10,11 @@
 #define __SDL_Game_Programming_Book__Glider__
 
 #include <iostream>
-#include "GameObjectFactory.h"
-#include "BulletHandler.h"
-#include "SoundManager.h"
 #include <math.h>
-#include "Enemy.h"
+#include "../GameObjectFactory.h"
+#include "BulletHandler.h"
+#include "../SoundManager.h"
+#include "../Enemy.h"
 
 class Glider : public Enemy
 {
@@ -82,11 +82,10 @@ public:
         }
         
         ShooterObject::update();
-        
     }
     
 private:
-    
+
     int m_maxHeight;
     int m_minHeight;
     int m_gap;

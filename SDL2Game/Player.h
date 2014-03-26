@@ -1,41 +1,50 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "ShooterObject.h"
+#include <iostream>
+#include <vector>
+#include "PlatformerObject.h"
 #include "GameObjectFactory.h"
 
-class Player : public ShooterObject
+class Player : public PlatformerObject
 {
 public:
 
     Player();
+    virtual ~Player() {}
+
+    virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 
     virtual void draw();
     virtual void update();
     virtual void clean();
-    virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 
-    //when get hit
     virtual void collision();
 
     virtual std::string type() { return "Player"; }
 
 private:
+
+    // bring the player back if there are lives left
+    void ressurect();
+
     // handle any input from the keyboard, mouse, or joystick
     void handleInput();
 
-    //bring the player back if there are lives left
-    void ressurect();
-
-    //handle any animation for the player
+    // handle any animation for the player
     void handleAnimation();
 
-    //player can invulnerable for a time
-    int m_invulnerable;
+    void handleMovement(Vector2D velocity);
+
+    // player can be invulnerable for a time
+    int m_bInvulnerable;
     int m_invulnerableTime;
     int m_invulnerableCounter;
+
+    bool m_bPressedJump;
 };
 
+// for the factory
 class PlayerCreator : public BaseCreator
 {
     GameObject* createGameObject() const

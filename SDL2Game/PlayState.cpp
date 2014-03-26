@@ -11,7 +11,6 @@
 #include "InputHandler.h"
 #include "LevelParser.h"
 #include "Level.h"
-#include "BulletHandler.h"
 
 #include <iostream>
 
@@ -27,7 +26,7 @@ void PlayState::update()
         }
 
         //update all bullet
-        TheBulletHandler::Instance()->updateBullets();
+        //TheBulletHandler::Instance()->updateBullets();
 
         if(TheGame::Instance()->getPlayerLives() == 0)
         {
@@ -49,13 +48,14 @@ void PlayState::render()
         {
             pLevel->render();
         }
+
         //std::cout << "PlayerLives:" << TheGame::Instance()->getPlayerLives() << std::endl;
         for(int i = 0; i < TheGame::Instance()->getPlayerLives(); i++)
         {
             TheTextureManager::Instance()->drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance()->getRenderer(), 0.0, 255);
         }
 
-        TheBulletHandler::Instance()->drawBullets();
+        //TheBulletHandler::Instance()->drawBullets();
     }
 }
 
@@ -66,11 +66,12 @@ bool PlayState::onEnter()
     LevelParser levelParser;
     pLevel = levelParser.parseLevel(TheGame::Instance()->getLevelFiles()[TheGame::Instance()->getCurrentLevel() - 1].c_str());
     //std::cout << "entering PlayState, pLevel:" << pLevel << std::endl;
+/*
     TheTextureManager::Instance()->load("assets/bullet1.png", "bullet1", TheGame::Instance()->getRenderer());
     TheTextureManager::Instance()->load("assets/bullet2.png", "bullet2", TheGame::Instance()->getRenderer());
     TheTextureManager::Instance()->load("assets/bullet3.png", "bullet3", TheGame::Instance()->getRenderer());
     TheTextureManager::Instance()->load("assets/lives.png", "lives", TheGame::Instance()->getRenderer());
-
+*/
     if(pLevel != 0)
     {
         m_loadingComplete = true;
@@ -86,7 +87,7 @@ bool PlayState::onExit()
     m_exiting = true;
 
     TheInputHandler::Instance()->reset();
-    TheBulletHandler::Instance()->clearBullets();
+    //TheBulletHandler::Instance()->clearBullets();
 
     std::cout << "exiting PlayState\n";
     return true;

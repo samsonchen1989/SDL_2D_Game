@@ -48,3 +48,15 @@ void GameStateMachine::render()
         m_gameStates.back()->render();
     }
 }
+
+void GameStateMachine::clean()
+{
+    if(!m_gameStates.empty())
+    {
+        m_gameStates.back()->onExit();
+
+        delete m_gameStates.back();
+
+        m_gameStates.clear();
+    }
+}

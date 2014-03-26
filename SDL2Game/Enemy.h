@@ -1,10 +1,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "ShooterObject.h"
+#include "PlatformerObject.h"
 #include "GameObjectFactory.h"
 
-class Enemy : public ShooterObject
+class Enemy : public PlatformerObject
 {
 public:
     virtual std::string type() { return "Enemy"; }
@@ -12,7 +12,7 @@ public:
 protected:
     int m_health;
 
-    Enemy() : ShooterObject() {}
+    Enemy() : PlatformerObject() {}
     virtual ~Enemy() {}
 };
 

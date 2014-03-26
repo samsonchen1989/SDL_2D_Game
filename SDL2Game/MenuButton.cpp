@@ -1,7 +1,7 @@
 #include "MenuButton.h"
 #include "InputHandler.h"
 
-MenuButton::MenuButton() : ShooterObject()
+MenuButton::MenuButton() : PlatformerObject()
 {
 
 }
@@ -9,7 +9,7 @@ MenuButton::MenuButton() : ShooterObject()
 void MenuButton::draw()
 {
 
-    ShooterObject::draw();
+    PlatformerObject::draw();
 }
 
 void MenuButton::update()
@@ -36,13 +36,13 @@ void MenuButton::update()
 
 void MenuButton::clean()
 {
-    ShooterObject::clean();
+    PlatformerObject::clean();
 }
 
 void MenuButton::load(std::unique_ptr<LoaderParams> const &pParams)
 {
     std::cout << "menubutton load" << std::endl;
-    ShooterObject::load(pParams);
+    PlatformerObject::load(pParams);
     m_callbackID = pParams->getCallbackID();
     m_currentFrame = MOUSE_OUT;
 }

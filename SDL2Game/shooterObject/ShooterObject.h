@@ -1,8 +1,8 @@
 #ifndef SDL_GAME_OBJECT_H
 #define SDL_GAME_OBJECT_H
 
-#include "GameObject.h"
-#include "Vector2D.h"
+#include "../GameObject.h"
+#include "../Vector2D.h"
 
 class ShooterObject : public GameObject
 {

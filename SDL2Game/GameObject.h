@@ -3,10 +3,13 @@
 
 #include <string>
 #include <SDL.h>
+#include <vector>
 #include <memory>
 
 #include "LoaderParams.h"
 #include "Vector2D.h"
+
+class TileLayer;
 
 //abstract base classes
 class GameObject
@@ -35,13 +38,7 @@ public:
     int getHeight() { return m_height; }
 
     //scroll along with tile map
-    void scroll(float scrollSpeed) 
-    {
-        if(type() != std::string("Player")) // player is never scrolled
-        {
-            m_position.setX(m_position.getX() - scrollSpeed);
-        }
-    }
+    void scroll(float scrollSpeed) {}
     // is the object currently being updated?
     bool updating() { return m_bUpdating; }
     // is the object dead?
@@ -50,6 +47,8 @@ public:
     bool dying() { return m_bDying; }
     // set whether to update the object or not
     void setUpdating(bool updating) { m_bUpdating = updating; }
+
+    void setCollisionLayers(std::vector<TileLayer*>* layers) { m_pCollisionLayers = layers; }
 
 protected:
     GameObject() :
@@ -89,6 +88,8 @@ protected:
     double m_angle;
     //blending
     int m_alpha;
+
+    std::vector<TileLayer*>* m_pCollisionLayers;
 };
 
 #endif

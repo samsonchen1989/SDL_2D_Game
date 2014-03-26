@@ -10,11 +10,11 @@
 #define __SDL_Game_Programming_Book__Turret__
 
 #include <iostream>
-#include "GameObjectFactory.h"
+#include "../GameObjectFactory.h"
 #include "BulletHandler.h"
-#include "SoundManager.h"
+#include "../SoundManager.h"
 #include <math.h>
-#include "Enemy.h"
+#include "../Enemy.h"
 
 class Turret : public Enemy
 {

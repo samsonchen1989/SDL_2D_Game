@@ -9,8 +9,8 @@
 #ifndef SDL_Game_Programming_Book_Level1Boss_h
 #define SDL_Game_Programming_Book_Level1Boss_h
 
-#include "Enemy.h"
-#include "Game.h"
+#include "../Enemy.h"
+#include "../Game.h"
 
 class Level1Boss : public Enemy
 {

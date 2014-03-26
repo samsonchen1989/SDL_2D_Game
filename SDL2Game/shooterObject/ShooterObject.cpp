@@ -1,7 +1,7 @@
 #include "ShooterObject.h"
-#include "Game.h"
-#include "TextureManager.h"
-#include "Vector2D.h"
+#include "../Game.h"
+#include "../TextureManager.h"
+#include "../Vector2D.h"
 #include <iostream>
 
 ShooterObject::ShooterObject(): GameObject(),
