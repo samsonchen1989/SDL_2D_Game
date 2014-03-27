@@ -42,6 +42,8 @@ private:
     int m_invulnerableCounter;
 
     bool m_bPressedJump;
+    bool m_bJumpFalling;
+    int m_gravity;
 };
 
 // for the factory

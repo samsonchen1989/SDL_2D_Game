@@ -15,6 +15,7 @@ Player::Player() :  PlatformerObject(),
     m_bPressedJump(false)
 {
     m_jumpHeight = 80;
+    m_gravity = 0.6;
 }
 
 void Player::collision()
@@ -26,8 +27,6 @@ void Player::collision()
         m_numFrames = 9;
         m_width = 50;
         m_bDying = true;
-
-        std::cout << m_currentFrame;
     }
 }
 
@@ -146,69 +145,57 @@ void Player::handleAnimation()
 
 void Player::update()
 {
-    if(!m_bDying)
-    {
-        if(m_position.m_y + m_height >= 470)
-        {
+    if(!m_bDying) {
+        if(m_position.m_y + m_height >= 470) {
             collision();
         }
 
         handleInput();
 
-        if(m_bMoveLeft)
-        {
-            if(m_bRunning)
-            {
+        if(m_bMoveLeft) {
+            if(m_bRunning) {
                 m_velocity.m_x = -5;
-            }
-            else
-            {
+            } else {
                 m_velocity.m_x = -2;
             }
-        }
-        else if(m_bMoveRight)
-        {
-            if(m_bRunning)
-            {
+        } else if(m_bMoveRight) {
+            if(m_bRunning) {
                 m_velocity.m_x = 5;
-            }
-            else
-            {
+            } else {
                 m_velocity.m_x = 2;
             }
         }
-        else
-        {
+        else {
             m_velocity.m_x = 0;
         }
 
-        if(m_position.m_y < m_lastSafePos.m_y - m_jumpHeight)
-        {
+        if(m_position.m_y < m_lastSafePos.m_y - m_jumpHeight) {
             m_bJumping = false;
+            m_bJumpFalling = true;
         }
 
-        if(!m_bJumping)
-        {
+        if(m_bJumping == false) {
             m_velocity.m_y = 5;
+        } else {
+            m_velocity.m_y = m_velocity.m_y + m_gravity;
         }
-        else
-        {
-            m_velocity.m_y = -5;
+
+        if (m_bJumpFalling == true) {
+            m_velocity.m_y = m_velocity.m_y + m_gravity;
         }
 
         handleMovement(m_velocity);
-    }
-    else
-    {
+    } else {
         m_velocity.m_x = 0;
-        if(m_dyingCounter == m_dyingTime)
-        {
+        if(m_dyingCounter == m_dyingTime) {
             ressurect();
         }
+
         m_dyingCounter++;
 
         m_velocity.m_y = 5;
     }
+
     handleAnimation();
 }
 
@@ -261,7 +248,6 @@ void Player::handleMovement(Vector2D velocity)
         else if(velocity.m_x < 0)
         {
             m_lastSafePos.m_x += 32;
-
         }
 
         // allow the player to jump again
@@ -269,6 +255,7 @@ void Player::handleMovement(Vector2D velocity)
 
         // jumping is now false
         m_bJumping = false;
+        m_bJumpFalling = false;
     }
 }
 
@@ -334,9 +321,11 @@ void Player::handleInput()
         if(!m_bPressedJump)
         {
             m_bJumping = true;
+            m_bJumpFalling = false;
             m_bCanJump = false;
             m_lastSafePos = m_position;
             m_bPressedJump = true;
+            m_velocity.m_y = -5;
         }
     }
 
